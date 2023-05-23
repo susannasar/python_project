@@ -1,4 +1,5 @@
 import os
+import yaml
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,6 +7,12 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from sklearn.preprocessing import normalize
 from sklearn.neighbors import NearestNeighbors
+
+
+def yaml_loader(yaml_file):
+    with open(yaml_file) as f:
+        yaml_dict = yaml.load(f, Loader=yaml.loader.SafeLoader)
+    return yaml_dict
 
 
 def generate_embeddings(model, dataloader):
@@ -33,7 +40,7 @@ def get_image_as_np_array(filename: str):
     return np.asarray(img)
 
 
-def plot_knn_examples(embeddings, filenames, n_neighbors=3, num_examples=6):
+def plot_knn_examples(embeddings, filenames, path_to_test_data, n_neighbors=3, num_examples=6):
     """Plots multiple rows of random images with their nearest neighbors"""
     # lets look at the nearest neighbors for some samples
     # we use the sklearn library

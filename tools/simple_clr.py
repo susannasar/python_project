@@ -1,6 +1,7 @@
 import torch
 import torchvision
 import torch.nn as nn
+import pytorch_lightning as pl
 
 from lightly.loss import NTXentLoss
 from lightly.models.modules.heads import SimCLRProjectionHead
@@ -10,7 +11,6 @@ class SimCLRModel(pl.LightningModule):
     def __init__(self):
         super().__init__()
 
-        # create a ResNet backbone and remove the classification head
         resnet = torchvision.models.resnet18()
         self.backbone = nn.Sequential(*list(resnet.children())[:-1])
 
@@ -36,5 +36,5 @@ class SimCLRModel(pl.LightningModule):
         optim = torch.optim.SGD(
             self.parameters(), lr=6e-2, momentum=0.9, weight_decay=5e-4
         )
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, max_epochs)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, 10)
         return [optim], [scheduler]
