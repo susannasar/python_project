@@ -31,7 +31,7 @@ dataloader_test = torch.utils.data.DataLoader(
 )
 
 if __name__ == '__main__':
-    model = SimCLRModel.load_from_checkpoint("lightning_logs/version_6/checkpoints/epoch=9-step=100.ckpt")
+    model = SimCLRModel.load_from_checkpoint(general_dict['checkpoint_path'])
     model.eval()
     embeddings, filenames = generate_embeddings(model, dataloader_test)
-    plot_knn_examples(embeddings, filenames)
+    plot_knn_examples(embeddings, filenames, general_dict['path_to_test_data'])

@@ -1,3 +1,4 @@
+import torch
 import pytorch_lightning as pl
 
 from lightly.data import LightlyDataset, SimCLRCollateFunction
